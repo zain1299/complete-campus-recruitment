@@ -1,0 +1,24 @@
+.SigninMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 1em;
+  width: 400px;
+  height: 500px;
+}
+
+.compLogo {
+  display: flex;
+  margin: 0 auto;
+  width: 8em;
+  height: 7em;
+  border-radius: 1em;
+}
+
+.SigninForm {
+  width: 20em;
+  height: 24em !important;
+}

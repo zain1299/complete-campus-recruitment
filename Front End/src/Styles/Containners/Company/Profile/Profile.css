@@ -1,0 +1,33 @@
+.ProfileMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 1em;
+  width: 400px;
+  margin-top: 6em;
+  height: 500px !important;
+}
+
+.ProfileForm {
+  width: 20em;
+}
+
+@media screen and (max-width: 300px) {
+  .ProfileMain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 1em;
+    width: 400px;
+    margin-top: 2em;
+  }
+
+  .ProfileForm {
+    color: black;
+    background-color: white;
+  }
+}
