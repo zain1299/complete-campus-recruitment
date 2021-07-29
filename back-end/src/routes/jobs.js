@@ -1,9 +1,8 @@
 const express = require("express");
+const { jobs } = require("../controller/jobs");
 
 const router = express.Router();
 
-router.post("/signin", (req, res) => {});
-
-router.post("/signup");
+router.get("/jobs", jobs);
 
 module.exports = router;

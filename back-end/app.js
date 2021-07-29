@@ -3,12 +3,15 @@ const app = express();
 const mongoose = require("mongoose");
 
 // Routes
-const userRoutes = require("./src/routes/Student/student");
+const authRoutes = require("./src/routes/auth");
+const companyRoutes = require("./src/routes/company/auth");
+const jobs = require("./src/routes/jobs");
 
 mongoose
   .connect("mongodb://localhost:27017/CampusRecruitmentSystem", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then(() => {
     console.log("Database connected successfully");
@@ -19,8 +22,12 @@ mongoose
 
 app.use(express.json());
 
-app.use("/api", userRoutes);
+app.use("/api", authRoutes);
+app.use("/api", companyRoutes);
+app.use("/api", jobs);
 
 app.listen(4000, () => {
   console.log("App listening to port 4000");
 });
+
+// https://www.youtube.com/watch?v=0DZdYLQF2JI
