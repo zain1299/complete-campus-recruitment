@@ -1,6 +1,6 @@
 import React from "react";
 import Cards from "../../Components/Card/Card";
-import Header from "./Header/Header";
+import Header from "../Header/Header";
 
 function Vacancies() {
   return (

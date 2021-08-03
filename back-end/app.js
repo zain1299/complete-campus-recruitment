@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 // Routes
 const authRoutes = require("./src/routes/auth");
-const companyRoutes = require("./src/routes/company/auth");
 const jobs = require("./src/routes/jobs");
 
 mongoose
@@ -21,9 +21,9 @@ mongoose
   });
 
 app.use(express.json());
+app.use(cors());
 
 app.use("/api", authRoutes);
-app.use("/api", companyRoutes);
 app.use("/api", jobs);
 
 app.listen(4000, () => {

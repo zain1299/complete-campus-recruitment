@@ -5,17 +5,19 @@ exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((user) => {
     if (user)
       return res.status(400).json({
-        message: "Student already registered",
+        message: "User already registered",
       });
 
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, breifProfile, password, role } =
+      req.body;
 
     const _user = new User({
       firstName,
       lastName,
       email,
+      breifProfile,
       password,
-      role: "student",
+      role,
     });
 
     _user.save((error, data) => {
@@ -24,9 +26,17 @@ exports.signup = (req, res) => {
       }
 
       if (data) {
-        return res.status(201).json({
-          message: "Student created Successfully",
-        });
+        if (role === "company") {
+          return res.status(201).json({
+            message: "Admin created Successfully",
+          });
+        } else {
+          if (role === "student") {
+            return res.status(201).json({
+              message: "Student created Successfully",
+            });
+          }
+        }
       }
     });
   });
@@ -49,5 +59,12 @@ exports.signin = (req, res) => {
     } else {
       return res.status(400).json({ message: "Something went wrong" });
     }
+  });
+};
+
+exports.signout = (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({
+    message: "Signout Successfully...!",
   });
 };

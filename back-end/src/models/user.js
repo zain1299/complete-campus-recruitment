@@ -19,14 +19,17 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  breifProfile: {
+    type: String,
+    min: 6,
+  },
   hash_password: {
     type: String,
     required: true,
   },
   role: {
     type: String,
-    enum: ["student", "company"],
-    default: "student",
+    required: [true, "role is required"],
   },
 });
 

@@ -1,20 +1,25 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import TextInput from "../../Components/TextInput";
 import "../../Styles/Containners/Company/Profile/Profile.css";
-import Header from "./Header/Header";
+import Header from "../Header/Header";
 
 function Profile() {
+  const auth = useSelector((state) => state.user);
+
   return (
     <div className="ProfileMain">
       <Header />
       <Form className="ProfileForm">
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Full Name</Form.Label>
-          <TextInput placeHolder="zain" disabled="ture" />
+          <Form.Label>First Name</Form.Label>
+          <TextInput placeHolder={auth?.user.firstName} disabled="ture" />
+          <Form.Label>Last Name</Form.Label>
+          <TextInput placeHolder={auth?.user.lastName} disabled="ture" />
           <Form.Label>Email</Form.Label>
           <TextInput
-            placeHolder="abcd@gmail.com"
+            placeHolder={auth?.user.email}
             id="email"
             type="email"
             name="email"

@@ -1,11 +1,11 @@
 import React from "react";
 import Cards from "../../Components/Card/Card";
-import StudentHeader from "./Header/StudentHeader";
+import Header from "../Header/Header";
 
 function AppliedJobs() {
   return (
     <div style={{ width: "100%", marginTop: "5rem" }}>
-      <StudentHeader />
+      <Header />
       <h3 style={{ display: "flex", justifyContent: "center" }}>
         Applied Jobs here
       </h3>

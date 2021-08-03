@@ -1,5 +1,9 @@
 const Job = require("../models/jobs");
 
 exports.jobs = (req, res, next) => {
-  res.send("see all jobs here");
+  Job.create(req.body)
+    .then((job) => {
+      res.send(job);
+    })
+    .catch(next);
 };

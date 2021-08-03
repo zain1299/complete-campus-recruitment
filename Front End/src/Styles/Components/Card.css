@@ -1,0 +1,26 @@
+.card-main {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2em;
+  margin-right: 0.4em;
+  margin-left: 0.2em;
+}
+
+.card-child {
+  width: 18em;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-body {
+  display: "flex";
+  flex-direction: column;
+  min-height: 20em;
+}
+
+.span-body {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}

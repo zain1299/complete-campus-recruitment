@@ -1,6 +1,5 @@
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
-import PostJob from "./containners/Company/PostJob";
 import Profile from "./containners/Company/Profile";
 import Vacancies from "./containners/Company/Vacancies";
 import Signin from "./containners/Signin/Signin";
@@ -9,20 +8,34 @@ import AllJobs from "./containners/Student/AllJobs";
 import StudentProfile from "./containners/Student/StudentProfile";
 import AppliedJobs from "./containners/Student/AppliedJobs";
 import Companies from "./containners/Student/Companies";
+import PrivateRoute from "./containners/HOC/privateRoute";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { isUserLoggedIn } from "./redux/Users/userActions";
 
 function App() {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!auth.authenticate) {
+      dispatch(isUserLoggedIn);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="App">
       <Switch>
-        <Route exact path="/" component={Signin} />
+        <PrivateRoute exact path="/" component={Vacancies} />
+        <PrivateRoute path="/profile" component={Profile} />
+        <PrivateRoute path="/companies" component={Companies} />
+        <PrivateRoute path="/all-jobs" component={AllJobs} />
+        <PrivateRoute path="/applied-jobs" component={AppliedJobs} />
+        <PrivateRoute path="/student-profile" component={StudentProfile} />
+        <Route path="/signin" component={Signin} />
         <Route path="/SignUp" component={SignUp} />
-        <Route path="/vacancies" component={Vacancies} />
-        <Route path="/profile" component={Profile} />
-        {/* <Route path="/post" component={PostJob} /> */}
-        <Route path="/companies" component={Companies} />
-        <Route path="/all-jobs" component={AllJobs} />
-        <Route path="/applied-jobs" component={AppliedJobs} />
-        <Route path="/student-profile" component={StudentProfile} />
       </Switch>
     </div>
   );

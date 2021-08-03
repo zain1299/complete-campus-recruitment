@@ -1,19 +1,24 @@
 import React from "react";
-import StudentHeader from "./Header/StudentHeader";
+import Header from "../Header/Header";
 import { Form, Button } from "react-bootstrap";
 import TextInput from "../../Components/TextInput";
+import { useSelector } from "react-redux";
 
 function StudentProfile() {
+  const auth = useSelector((state) => state.user);
+
   return (
     <div className="ProfileMain">
-      <StudentHeader />
+      <Header />
       <Form className="ProfileForm">
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Full Name</Form.Label>
-          <TextInput placeHolder="zain" disabled="ture" />
+          <Form.Label>Firt Name</Form.Label>
+          <TextInput placeHolder={auth.user.firstName} disabled="ture" />
+          <Form.Label>Last Name</Form.Label>
+          <TextInput placeHolder={auth.user.lastName} disabled="ture" />
           <Form.Label>Email</Form.Label>
           <TextInput
-            placeHolder="abc@gmail.com"
+            placeHolder={auth.user.email}
             id="email"
             type="email"
             name="email"
