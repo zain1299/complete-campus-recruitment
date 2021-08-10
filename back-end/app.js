@@ -7,6 +7,10 @@ const cors = require("cors");
 const authRoutes = require("./src/routes/auth");
 const jobs = require("./src/routes/jobs");
 
+// app.get("/", (req, res) => {
+//   res.send("Hello from the server");
+// });
+
 mongoose
   .connect("mongodb://localhost:27017/CampusRecruitmentSystem", {
     useNewUrlParser: true,

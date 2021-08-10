@@ -2,7 +2,7 @@ const User = require("../models/user");
 var jwt = require("jsonwebtoken");
 
 exports.signup = (req, res) => {
-  User.findOne({ email: req.body.email }).exec((user) => {
+  User.findOne({ email: req.body.email }).exec((error, user) => {
     if (user)
       return res.status(400).json({
         message: "User already registered",
@@ -38,6 +38,20 @@ exports.signup = (req, res) => {
           }
         }
       }
+    });
+  });
+};
+
+exports.updateUser = (req, res) => {
+  User.findOne({ email: req.body.email }).exec((error, user) => {
+    if (error) return res.status(400).json({ error });
+
+    const { firstName, lastName, breifProfile } = req.body;
+
+    if (user) {
+    
+    const _user = User.updateOne({
+      
     });
   });
 };
