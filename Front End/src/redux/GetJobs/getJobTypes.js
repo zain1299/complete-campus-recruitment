@@ -1,0 +1,5 @@
+export const getJobsConstants = {
+  GET_JOB_REQUEST: "GET_JOB_REQUEST ",
+  GET_JOB_SUCCESS: "GET_JOB_SUCCESS",
+  GET_JOB_FAILURE: "GET_JOB_FAILURE",
+};

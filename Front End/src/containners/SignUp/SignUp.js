@@ -9,6 +9,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { signup } from "../../redux/Signup/signupActions";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -31,19 +33,44 @@ function SignUp() {
     dispatch(signup(user));
   };
 
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      firstName: Yup.string().required("Required"),
+      lastName: Yup.string().required("Required"),
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string().required("Required"),
+    }),
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
+
   return auth?.authenticate ? (
     <Redirect to={"/"} />
   ) : (
     <div className="SignupMain">
-      <form className="SignupForm">
+      <form onSubmit={formik.handleSubmit} className="SignupForm">
         <Image className="compLogo" src={logo} alt="logo" roundedCircle />
-        <TextInput
-          placeHolder="First Name"
-          type="text"
-          name="firtName"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
+        <Form.Group>
+          <TextInput
+            placeHolder="First Name"
+            type="text"
+            name="firtName"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.firstName && formik.errors.firstName ? (
+            <div>{formik.errors.firstName}</div>
+          ) : null}
+        </Form.Group>
+
         <TextInput
           placeHolder="Last Name"
           type="text"
@@ -51,13 +78,22 @@ function SignUp() {
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
-        <TextInput
-          placeHolder="Email"
-          type="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+
+        <Form.Group>
+          <TextInput
+            placeHolder="Email"
+            value={email}
+            type="email"
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={formik.handleBlur}
+            // {...formik.getFieldProps("email")}
+          />
+
+          {formik.touched.email && formik.errors.email ? (
+            <div>{formik.errors.email}</div>
+          ) : null}
+        </Form.Group>
 
         <div>
           <Form.Group style={{ display: "flex" }}>
@@ -79,20 +115,25 @@ function SignUp() {
           </Form.Group>
         </div>
 
-        <TextInput
-          placeHolder="Password"
-          type="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <Form.Group>
+          <TextInput
+            placeHolder="Password"
+            type="password"
+            value={password}
+            id="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            onBlur={formik.handleBlur}
+            // {...formik.getFieldProps("password")}
+          />
+          {formik.touched.password && formik.errors.password ? (
+            <div>{formik.errors.password}</div>
+          ) : null}
+        </Form.Group>
+
         <Form.Group>
           <Form.Check
-            style={{
-              display: "flex",
-              marginTop: "0.199rem",
-              marginBottom: "1rem",
-            }}
+            className="my-3"
             type="checkbox"
             label="I hereby agree all terms of services "
           />

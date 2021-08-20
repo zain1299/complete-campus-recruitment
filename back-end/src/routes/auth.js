@@ -1,5 +1,11 @@
 const express = require("express");
-const { signup, signin, signout, updateUser } = require("../controller/auth");
+const {
+  signup,
+  signin,
+  signout,
+  updateUser,
+  allAdmins,
+} = require("../controller/auth");
 const { requireSignin } = require("../common-middleware/index");
 const {
   validateSignupRequest,
@@ -11,7 +17,8 @@ const router = express.Router();
 
 router.post("/signup", validateSignupRequest, isRequestValidated, signup);
 router.post("/signin", validateSigninRequest, isRequestValidated, signin);
-router.post("/update-user", requireSignin, updateUser);
+router.put("/update-user", updateUser);
 router.post("/signout", signout);
+router.get("/all-admins", allAdmins);
 
 module.exports = router;

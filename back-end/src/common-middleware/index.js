@@ -8,7 +8,7 @@ exports.requireSignin = (req, res, next) => {
     const user = jwt.verify(token, secret_key);
     req.user = user;
   } else {
-    return res.status(400).json({ message: "Authorizatin Required!" });
+    return res.status(400).json({ message: "Authorization Required!" });
   }
   next();
 };

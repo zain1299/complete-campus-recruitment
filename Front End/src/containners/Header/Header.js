@@ -59,7 +59,7 @@ function Header() {
         <Nav.Link as={Link} to="/applied-jobs">
           Applied Jobs
         </Nav.Link>
-        <Nav.Link as={Link} to="/student-profile">
+        <Nav.Link as={Link} to="/profile">
           Profile
         </Nav.Link>
         <Form className="d-flex">

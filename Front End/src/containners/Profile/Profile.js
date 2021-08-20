@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TextInput from "../../Components/TextInput";
+import { updateAction } from "../../redux/UpdateUser/action";
 import "../../Styles/Containners/Company/Profile/Profile.css";
 import Header from "../Header/Header";
 
 function Profile() {
+  const [briefProfile, setBriefProfile] = useState();
+
   const auth = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const user_id = auth.user._id;
+
+  const userUpdate = (e) => {
+    e.preventDefault();
+
+    const user = {
+      user_id,
+      briefProfile,
+    };
+    dispatch(updateAction(user));
+  };
 
   return (
     <div className="ProfileMain">
@@ -28,16 +43,21 @@ function Profile() {
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Label>Brief Profile</Form.Label>
-          <Form.Control as="textarea" rows={3} placeholder="Brief Profile" />
+          <Form.Control
+            as="textarea"
+            rows={3}
+            placeholder={auth?.user.breifProfile}
+            onChange={(e) => setBriefProfile(e.target.value)}
+          />
         </Form.Group>
         <Form.Group className="mb-3">
           <TextInput
-            placeHolder="signed in as Company"
+            placeHolder={`signed in as ${auth.user.role}`}
             type="text"
             disabled="ture"
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" onClick={userUpdate}>
           Update
         </Button>
       </Form>

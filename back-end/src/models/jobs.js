@@ -15,12 +15,20 @@ const jobSchema = new mongoose.Schema({
     required: [true, "Experience is required"],
   },
   last_date: {
-    type: String,
+    type: Date,
     required: [true, "Last date to apply is required"],
   },
   category: {
     type: String,
     required: [true, "Category is required"],
+  },
+  minimum_salary: {
+    type: Number,
+    required: [true, "minimum Salary is required"],
+  },
+  company_id: {
+    type: String,
+    required: [true, "Company id is required"],
   },
 });
 

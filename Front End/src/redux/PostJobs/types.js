@@ -1,0 +1,5 @@
+export const postJobsConstants = {
+  POST_JOB_REQUEST: "POST_JOB_REQUEST ",
+  POST_JOB_SUCCESS: "POST_JOB_SUCCESS",
+  POST_JOB_FAILURE: "POST_JOB_FAILURE",
+};

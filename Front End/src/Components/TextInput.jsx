@@ -9,6 +9,7 @@ function TextInput({
   name,
   id,
   className,
+  onBlur,
   disabled,
 }) {
   return (
@@ -23,6 +24,7 @@ function TextInput({
         key={id}
         id={id}
         disabled={disabled}
+        onBlur = {onBlur}
       />
     </div>
   );

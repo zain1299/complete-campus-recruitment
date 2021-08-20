@@ -1,0 +1,12 @@
+.card-div {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-top: 5rem;
+}
+
+.h3-div {
+  display: flex;
+  justify-content: center;
+}

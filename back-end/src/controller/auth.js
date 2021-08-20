@@ -43,17 +43,21 @@ exports.signup = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  User.findOne({ email: req.body.email }).exec((error, user) => {
-    if (error) return res.status(400).json({ error });
+  const body = req.body;
+  const { breifProfile, user_id } = body;
 
-    const { firstName, lastName, breifProfile } = req.body;
-
-    if (user) {
-    
-    const _user = User.updateOne({
-      
-    });
-  });
+  User.findByIdAndUpdate(
+    user_id,
+    { breifProfile: breifProfile },
+    function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json({ success: true });
+        console.log("Updated User : ", docs);
+      }
+    }
+  );
 };
 
 exports.signin = (req, res) => {
@@ -62,10 +66,10 @@ exports.signin = (req, res) => {
     if (user) {
       if (user.authenticate(req.body.password)) {
         const token = jwt.sign({ _id: user._id, role: user.role }, "secret");
-        const { _id, firstName, lastName, email, role } = user;
+        const { _id, firstName, lastName, email, breifProfile, role } = user;
         res.status(200).json({
           token,
-          user: { _id, firstName, lastName, email, role },
+          user: { _id, firstName, lastName, email, breifProfile, role },
         });
       } else {
         return res.status(400).json({ message: "Invalid Password" });
@@ -80,5 +84,15 @@ exports.signout = (req, res) => {
   res.clearCookie("token");
   res.status(200).json({
     message: "Signout Successfully...!",
+  });
+};
+
+exports.allAdmins = (req, res) => {
+  User.find({}).exec((error, user) => {
+    if (error) return res.status(400).json({ error });
+    if (user) {
+      const users = user.filter((filtered) => filtered.role === "company");
+      res.send(users);
+    }
   });
 };

@@ -8,7 +8,7 @@
 
 .card-child {
   width: 18em;
-  height: 100%;
+  height: 105%;
   display: flex;
   justify-content: space-between;
 }

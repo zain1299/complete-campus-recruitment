@@ -6,6 +6,7 @@ const cors = require("cors");
 // Routes
 const authRoutes = require("./src/routes/auth");
 const jobs = require("./src/routes/jobs");
+const applyJobs = require("./src/routes/applyJob");
 
 // app.get("/", (req, res) => {
 //   res.send("Hello from the server");
@@ -29,9 +30,8 @@ app.use(cors());
 
 app.use("/api", authRoutes);
 app.use("/api", jobs);
+app.use("/api", applyJobs);
 
 app.listen(4000, () => {
   console.log("App listening to port 4000");
 });
-
-// https://www.youtube.com/watch?v=0DZdYLQF2JI

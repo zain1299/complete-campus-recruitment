@@ -8,6 +8,7 @@ const initialState = {
     email: "",
     breifProfile: "",
     role: "",
+    _id: "",
   },
   authenticate: false,
   authenticating: false,

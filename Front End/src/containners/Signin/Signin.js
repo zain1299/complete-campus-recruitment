@@ -9,12 +9,28 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/Users/userActions";
 import { useSelector } from "react-redux";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.user);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("required"),
+      password: Yup.string().required("Required"),
+    }),
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   const userLogin = (e) => {
     e.preventDefault();
@@ -26,34 +42,42 @@ const Signin = () => {
     <Redirect to={"/"} />
   ) : (
     <div className="SigninMain">
-      <form className="SigninForm">
+      <form onSubmit={formik.handleSubmit} className="SigninForm">
         <Image className="compLogo" src={logo} alt="logo" roundedCircle />
-
-        <TextInput
-          placeHolder="Email"
-          value={email}
-          id="email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <TextInput
-          placeHolder="Password"
-          type="password"
-          value={password}
-          id="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
         <Form.Group>
-          <Form.Check
-            style={{
-              display: "flex",
-              marginTop: "0.199rem",
-              marginBottom: "1rem",
-            }}
-            type="checkbox"
-            label="Remember me "
+          <TextInput
+            placeHolder="Email"
+            value={email}
+            type="email"
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={formik.handleBlur}
+            // {...formik.getFieldProps("email")}
           />
+
+          {formik.touched.email && formik.errors.email ? (
+            <div>{formik.errors.email}</div>
+          ) : null}
+        </Form.Group>
+
+        <Form.Group>
+          <TextInput
+            placeHolder="Password"
+            type="password"
+            value={password}
+            id="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            onBlur={formik.handleBlur}
+            // {...formik.getFieldProps("password")}
+          />
+          {formik.touched.password && formik.errors.password ? (
+            <div>{formik.errors.password}</div>
+          ) : null}
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Check className="my-2" type="checkbox" label="Remember me " />
         </Form.Group>
         <BtnPrimary type="submit" title="Signin" onClick={userLogin} />
         <Link to="/signup">
