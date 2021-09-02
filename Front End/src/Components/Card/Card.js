@@ -18,9 +18,9 @@ function Cards({
   dropDownValue,
   dropDownClickHandler,
   onClick,
-  temp,
 }) {
-  const auth = useSelector((state) => state.user);
+  const state = useSelector((state) => state);
+  const auth = state.user;
 
   const renderAdminLoggedIn = () => {
     return (
@@ -34,17 +34,17 @@ function Cards({
           <DropdownButton
             variant="secondary"
             title="Applied Students"
-            id="dropdown-menu-align-right"
+            id="dropdown-basic-button"
             onClick={dropDownClickHandler}
           >
             {dropDownValue.length > 0 ? (
               dropDownValue?.map((item, index) => (
-                <Dropdown.Item eventKey={index}>
+                <Dropdown.Item key={item._id}>
                   {item?.firstName + " " + item.lastName}
                 </Dropdown.Item>
               ))
             ) : (
-              <Dropdown.Item eventKey="no dat">No Entries</Dropdown.Item>
+              <Dropdown.Item key="no dat">No Entries</Dropdown.Item>
             )}
           </DropdownButton>
         ) : null}
@@ -55,7 +55,7 @@ function Cards({
   const renderStudnetLoggedIn = () => {
     return (
       <span className="span-body">
-        <Button variant="danger" onClick={onClick}>
+        <Button variant="success" onClick={onClick}>
           Apply this job
         </Button>
       </span>

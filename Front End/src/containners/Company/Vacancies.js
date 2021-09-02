@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Cards from "../../Components/Card/Card";
@@ -9,8 +9,8 @@ import { deleteAction } from "../../redux/DeleteJobs/action";
 import { getAppliedStudentsAction } from "../../redux/GetAllAppliedStudents/action";
 
 function Vacancies() {
-  const [appliedStudent1, setAppliedStudent] = useState([]);
-  const [temp, setTemp] = useState(Date.now());
+  // const [appliedStudent, setAppliedStudent] = useState({});
+  // const [temp, setTemp] = useState(Date.now());
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -22,7 +22,6 @@ function Vacancies() {
   const applied = state.appliedStudent;
 
   const allJobs = jobDetails.getJobs;
-  const allStudents = applied.appliedStudents;
 
   const dispatch = useDispatch();
 
@@ -31,28 +30,30 @@ function Vacancies() {
   };
 
   const HandlerAppliedStudent = (jobId) => {
-    dispatch(getAppliedStudentsAction(jobId));
+    if (applied.appliedStudents.length === 0) {
+      dispatch(getAppliedStudentsAction(jobId));
+      return handleShow();
+    }
   };
 
-  useEffect(() => {
-    if (allStudents.length !== 0) {
-      setAppliedStudent(allStudents);
-      setTemp(Date.now());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   if (applied.appliedStudents.length !== 0) {
+  //     setAppliedStudent(applied.appliedStudents);
+  //     console.log("render", applied.appliedStudents);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div className="main-div">
       <Header />
-      <h3 className="text-center ">VACANCIES HERE</h3>
+      <h3 className="text-center">VACANCIES HERE</h3>
       <div className="child-div my-4">
         {allJobs
           ?.filter((filtered) => filtered.company_id === auth?.user._id)
           .map(function (item, index) {
             return (
               <Cards
-                key={index}
                 title={item.title}
                 text={item.description}
                 key2="Experience Required : "
@@ -65,19 +66,21 @@ function Vacancies() {
                 value5={auth?.user.firstName + " " + auth?.user.lastName}
                 last_date={item.last_date}
                 onClick={() => deleteJob(item._id)}
-                dropDownValue={appliedStudent1}
+                dropDownValue={applied.appliedStudents}
                 dropDownClickHandler={() => HandlerAppliedStudent(item._id)}
-                temp={temp}
+                key={index}
               />
             );
           })}
       </div>
-      <ReadOnlyModals
-        // data={appliedStudent1}
-        show={show}
-        handleClose={handleClose}
-        handleShow={handleShow}
-      />
+      {!!show && (
+        <ReadOnlyModals
+          data={applied.appliedStudents}
+          show={show}
+          handleClose={handleClose}
+          handleShow={handleShow}
+        />
+      )}
     </div>
   );
 }

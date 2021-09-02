@@ -52,7 +52,7 @@ function SignUp() {
   });
 
   return auth?.authenticate ? (
-    <Redirect to={"/"} />
+    <Redirect to={"/profile"} />
   ) : (
     <div className="SignupMain">
       <form onSubmit={formik.handleSubmit} className="SignupForm">

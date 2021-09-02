@@ -3,16 +3,30 @@ import { useSelector } from "react-redux";
 import Cards from "../../Components/Card/CardChild";
 import Header from "../Header/Header";
 import "../../Styles/Containners/Student/Applied.css";
+import { getAppliedJobbsAction } from "../../redux/GetAllAppliedJobs/action";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 function AppliedJobs() {
-  const applyJob = useSelector((state) => state.appliedJob);
+  const dispatch = useDispatch();
+
+  const state = useSelector((state) => state);
+  const applyJob = state.appliedJob;
+  const auth = state.user;
 
   const appliedJobs = applyJob.appliedJob;
+
+  useEffect(() => {
+    if (applyJob.appliedJob.length === 0) {
+      dispatch(getAppliedJobbsAction(auth.user._id));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div style={{ width: "100%" }}>
       <Header />
-      <h3 className="text-center">Applied Jobs here</h3>
+      <h3 className="text-center my-5">Applied Jobs here</h3>
       <div className="card-div">
         {appliedJobs.map((item, index) => {
           return (

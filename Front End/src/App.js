@@ -13,7 +13,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { isUserLoggedIn } from "./redux/Users/userActions";
 import { getJObsAction } from "./redux/GetJobs/getJobAction";
-import { getAppliedJobbsAction } from "./redux/GetAllAppliedJobs/action";
 import { fetchAdminsAction } from "./redux/GetAllAdmins/action";
 
 function App() {
@@ -21,7 +20,6 @@ function App() {
   const state = useSelector((state) => state);
   const auth = state.user;
   const allJobs = state.allJob;
-  const applyJob = state.appliedJob;
   const admins = state.allAdmin;
 
   useEffect(() => {
@@ -39,13 +37,6 @@ function App() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (applyJob.appliedJob.length === 0) {
-      dispatch(getAppliedJobbsAction(auth.user._id));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applyJob.appliedJob]);
 
   return (
     <div className="App">
